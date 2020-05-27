@@ -5,6 +5,8 @@ const cors = require('cors');
 
 const routes = require('./routes');
 
+require('./database');
+
 class App {
   constructor() {
     this.server = express();
