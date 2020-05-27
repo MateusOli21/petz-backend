@@ -5,6 +5,21 @@ const User = require('../models/User');
 const File = require('../models/File');
 
 class EstablishmentController {
+  async index(req, res) {
+    const user_id = req.userId;
+
+    const establishments = await Establishment.findAll({
+      where: { user_id },
+      include: [
+        { model: User, as: 'user', attributes: ['id', 'name'] },
+        { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
+      ],
+      attributes: ['id', 'name', 'email', 'contact', 'location'],
+    });
+
+    return res.status(200).json(establishments);
+  }
+
   async store(req, res) {
     const schema = Yup.object().shape({
       name: Yup.string().required(),
@@ -37,7 +52,7 @@ class EstablishmentController {
       attributes: ['id', 'name', 'email', 'contact', 'location'],
     });
 
-    res.status(200).json(establishment);
+    res.status(201).json(establishment);
   }
 
   async update(req, res) {

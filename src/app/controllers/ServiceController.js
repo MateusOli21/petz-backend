@@ -9,9 +9,7 @@ class ServiceController {
     const userId = req.userId;
     const user = await User.findByPk(userId);
     if (!user.provider) {
-      return res
-        .status(400)
-        .json({ error: 'Clients cannot create establishments.' });
+      return res.status(400).json({ error: 'Clients cannot list services.' });
     }
 
     const establishmentId = req.params.establishmentId;
@@ -82,7 +80,7 @@ class ServiceController {
       attributes: ['id', 'name', 'value', 'time'],
     });
 
-    return res.status(200).json(service);
+    return res.status(201).json(service);
   }
 
   async update(req, res) {

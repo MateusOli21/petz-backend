@@ -25,10 +25,12 @@ routes.put('/users', UserController.update);
 
 routes.post('/files', upload.single('file'), FileController.store);
 
+routes.get('/pets', PetsController.index);
 routes.post('/pets', PetsController.store);
 routes.put('/pets/:id', PetsController.update);
 routes.delete('/pets/:id', PetsController.delete);
 
+routes.get('/establishments', EstablishmentController.index);
 routes.post('/establishments', EstablishmentController.store);
 routes.put('/establishments/:id', EstablishmentController.update);
 routes.delete('/establishments/:id', EstablishmentController.delete);
