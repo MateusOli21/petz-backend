@@ -6,7 +6,6 @@ class Pet extends Model {
     super.init(
       {
         name: Sequelize.STRING,
-        email: Sequelize.STRING,
         age: Sequelize.INTEGER,
         sex: Sequelize.STRING,
         weight: Sequelize.INTEGER,
@@ -22,7 +21,7 @@ class Pet extends Model {
   }
 
   static associate(models) {
-    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'user' });
+    this.belongsTo(models.User, { foreignKey: 'user_id', as: 'owner' });
     this.belongsTo(models.File, { foreignKey: 'avatar_id', as: 'avatar' });
   }
 }
