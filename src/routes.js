@@ -11,6 +11,7 @@ const SessionController = require('./app/controllers/SessionController');
 const FileController = require('./app/controllers/FileController');
 const PetsController = require('./app/controllers/PetsController');
 const EstablishmentController = require('./app/controllers/EstablishmentController');
+const ServiceController = require('./app/controllers/ServiceController');
 
 const authMiddleware = require('./app/middlewares/auth');
 
@@ -31,5 +32,10 @@ routes.delete('/pets/:id', PetsController.delete);
 routes.post('/establishments', EstablishmentController.store);
 routes.put('/establishments/:id', EstablishmentController.update);
 routes.delete('/establishments/:id', EstablishmentController.delete);
+
+routes.get('/services/:establishmentId', ServiceController.index);
+routes.post('/services/:establishmentId', ServiceController.store);
+routes.put('/services/:establishmentId/:id', ServiceController.update);
+routes.delete('/services/:establishmentId/:id', ServiceController.delete);
 
 module.exports = routes;
