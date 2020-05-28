@@ -7,8 +7,9 @@ const File = require('../app/models/File');
 const Pet = require('../app/models/Pet');
 const Establishment = require('../app/models/Establishment');
 const Service = require('../app/models/Service');
+const Appointment = require('../app/models/Appointment');
 
-const models = [User, File, Pet, Establishment, Service];
+const models = [User, File, Pet, Establishment, Service, Appointment];
 
 class Database {
   constructor() {
