@@ -13,6 +13,7 @@ const PetsController = require('./app/controllers/PetsController');
 const EstablishmentController = require('./app/controllers/EstablishmentController');
 const ServiceController = require('./app/controllers/ServiceController');
 const AppointmentController = require('./app/controllers/AppointmentsController');
+const ScheduleController = require('./app/controllers/ScheduleController');
 
 const authMiddleware = require('./app/middlewares/auth');
 
@@ -34,6 +35,8 @@ routes.delete('/pets/:id', PetsController.delete);
 routes.get('/appointments', AppointmentController.index);
 routes.post('/appointments', AppointmentController.store);
 routes.delete('/appointments/:id', AppointmentController.delete);
+
+routes.get('/schedule/:establishmentId', ScheduleController.index);
 
 routes.get('/establishments', EstablishmentController.index);
 routes.post('/establishments', EstablishmentController.store);
