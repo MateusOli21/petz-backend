@@ -14,7 +14,7 @@ const EstablishmentController = require('./app/controllers/EstablishmentControll
 const ServiceController = require('./app/controllers/ServiceController');
 const AppointmentController = require('./app/controllers/AppointmentsController');
 const ScheduleController = require('./app/controllers/ScheduleController');
-
+const AvailabreController = require('./app/controllers/AvailableController');
 const authMiddleware = require('./app/middlewares/auth');
 
 routes.post('/sessions', SessionController.store);
@@ -38,6 +38,7 @@ routes.delete('/appointments/:id', AppointmentController.delete);
 
 routes.get('/schedule/:establishmentId', ScheduleController.index);
 
+routes.get('/establishments/:id/available', AvailabreController.index);
 routes.get('/establishments', EstablishmentController.index);
 routes.post('/establishments', EstablishmentController.store);
 routes.put('/establishments/:id', EstablishmentController.update);
