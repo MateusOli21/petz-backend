@@ -49,7 +49,7 @@ class EstablishmentController {
         { model: User, as: 'user', attributes: ['id', 'name'] },
         { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
       ],
-      attributes: ['id', 'name', 'email', 'contact', 'location'],
+      attributes: ['id', 'user_id', 'name', 'email', 'contact', 'location'],
     });
 
     res.status(201).json(establishment);
@@ -90,7 +90,7 @@ class EstablishmentController {
         { model: User, as: 'user', attributes: ['id', 'name'] },
         { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
       ],
-      attributes: ['id', 'name', 'email', 'contact', 'location'],
+      attributes: ['id', 'user_id', 'name', 'email', 'contact', 'location'],
     });
 
     res.status(200).json(establishmentUpdated);
