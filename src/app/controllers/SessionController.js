@@ -5,6 +5,8 @@ const authConfig = require('../../config/auth');
 
 const User = require('../models/User');
 const File = require('../models/File');
+const Pet = require('../models/Pet');
+const Establishment = require('../models/Establishment');
 
 class SessionController {
   async store(req, res) {
@@ -36,8 +38,30 @@ class SessionController {
 
     const { id, name, avatar, provider } = user;
 
+    if (!provider) {
+      const pets = await Pet.findAll({
+        where: { user_id: id },
+        attributes: ['id', 'name', 'sex', 'age', 'weight', 'comments'],
+      });
+
+      return res.status(200).json({
+        user: { id, name, provider, avatar, pets },
+        token: jwt.sign({ id }, authConfig.secret, {
+          expiresIn: authConfig.expiresIn,
+        }),
+      });
+    }
+
+    const establishments = await Establishment.findAll({
+      where: { user_id: id },
+      include: [
+        { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
+      ],
+      attributes: ['id', 'name', 'email', 'contact', 'location'],
+    });
+
     return res.status(200).json({
-      user: { id, name, provider, avatar },
+      user: { id, name, provider, avatar, establishments },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
