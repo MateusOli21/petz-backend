@@ -50,7 +50,16 @@ class PetController {
         { model: User, as: 'owner', attributes: ['id', 'name'] },
         { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
       ],
-      attributes: ['id', 'name', 'sex', 'age', 'weight', 'castred', 'comments'],
+      attributes: [
+        'id',
+        'user_id',
+        'name',
+        'sex',
+        'age',
+        'weight',
+        'castred',
+        'comments',
+      ],
     });
 
     return res.status(201).json(pet);

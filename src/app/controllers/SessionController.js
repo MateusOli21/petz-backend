@@ -7,6 +7,7 @@ const User = require('../models/User');
 const File = require('../models/File');
 const Pet = require('../models/Pet');
 const Establishment = require('../models/Establishment');
+const Service = require('../models/Service');
 
 class SessionController {
   async store(req, res) {
@@ -41,6 +42,9 @@ class SessionController {
     if (!provider) {
       const pets = await Pet.findAll({
         where: { user_id: id },
+        include: [
+          { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
+        ],
         attributes: ['id', 'name', 'sex', 'age', 'weight', 'comments'],
       });
 
