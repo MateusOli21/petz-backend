@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const Yup = require('yup');
+const { Op } = require('sequelize');
 
 const authConfig = require('../../config/auth');
 
@@ -45,11 +46,19 @@ class SessionController {
         include: [
           { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
         ],
-        attributes: ['id', 'name', 'sex', 'age', 'weight', 'comments'],
+        attributes: [
+          'id',
+          'name',
+          'castred',
+          'sex',
+          'age',
+          'weight',
+          'comments',
+        ],
       });
 
       return res.status(200).json({
-        user: { id, name, provider, avatar, pets },
+        user: { id, name, provider, email, avatar, pets },
         token: jwt.sign({ id }, authConfig.secret, {
           expiresIn: authConfig.expiresIn,
         }),
@@ -64,8 +73,23 @@ class SessionController {
       attributes: ['id', 'name', 'email', 'contact', 'location'],
     });
 
+    const establishmentsIds = await establishments.map((establishment) => {
+      const establishment_id = establishment.id;
+
+      return establishment_id;
+    });
+
+    const services = await Service.findAll({
+      where: {
+        establishment_id: {
+          [Op.or]: establishmentsIds,
+        },
+      },
+      attributes: ['id', 'name', 'value', 'time', 'establishment_id'],
+    });
+
     return res.status(200).json({
-      user: { id, name, provider, avatar, establishments },
+      user: { id, name, provider, email, avatar, establishments, services },
       token: jwt.sign({ id }, authConfig.secret, {
         expiresIn: authConfig.expiresIn,
       }),
