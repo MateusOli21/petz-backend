@@ -1,15 +1,14 @@
 const Yup = require('yup');
+const { Op } = require('sequelize');
 
 const Establishment = require('../models/Establishment');
 const User = require('../models/User');
 const File = require('../models/File');
+const Service = require('../models/Service');
 
 class EstablishmentController {
   async index(req, res) {
-    const user_id = req.userId;
-
     const establishments = await Establishment.findAll({
-      where: { user_id },
       include: [
         { model: User, as: 'user', attributes: ['id', 'name'] },
         { model: File, as: 'avatar', attributes: ['id', 'path', 'url'] },
@@ -17,7 +16,33 @@ class EstablishmentController {
       attributes: ['id', 'name', 'email', 'contact', 'location'],
     });
 
-    return res.status(200).json(establishments);
+    const establishmentsIds = await establishments.map((establishment) => {
+      const establishment_id = establishment.id;
+
+      return establishment_id;
+    });
+
+    const allServices = await Service.findAll({
+      where: {
+        establishment_id: {
+          [Op.or]: establishmentsIds,
+        },
+      },
+      attributes: ['id', 'name', 'value', 'time', 'establishment_id'],
+    });
+
+    const establishmentInfos = establishments.map((establishment) => {
+      const services = allServices.filter(
+        (service) => service.establishment_id === establishment.id
+      );
+
+      return {
+        profile: establishment,
+        services,
+      };
+    });
+
+    return res.status(200).json(establishmentInfos);
   }
 
   async store(req, res) {
