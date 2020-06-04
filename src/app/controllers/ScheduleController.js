@@ -32,7 +32,6 @@ class ScheduleController {
 
     const { date } = req.query;
     const parsedDate = parseISO(date);
-    console.log(parsedDate);
 
     const appointments = await Appointment.findAll({
       where: {
@@ -41,11 +40,11 @@ class ScheduleController {
         date: { [Op.between]: [startOfDay(parsedDate), endOfDay(parsedDate)] },
       },
       include: [
-        { model: User, as: 'user', attributes: ['name'] },
-        { model: Pet, as: 'pet', attributes: ['name'] },
-        { model: Service, as: 'service', attributes: ['name'] },
+        { model: User, as: 'user', attributes: ['id', 'name'] },
+        { model: Pet, as: 'pet', attributes: ['id', 'name'] },
+        { model: Service, as: 'service', attributes: ['id', 'name'] },
       ],
-      attributes: ['id', 'date'],
+      attributes: ['id', 'date', 'past', 'cancelable', 'canceled_at'],
       order: ['date'],
     });
 
