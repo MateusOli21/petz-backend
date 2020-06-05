@@ -1,9 +1,9 @@
 # PetZ - Node API
 
-## Indíce
+### Indíce
 
 - [PetZ - Node API](#petz---node-api)
-  - [Indíce](#indíce)
+    - [Indíce](#indíce)
   - [Introdução](#introdução)
   - [Técnologias](#técnologias)
   - [Rotas da aplicação](#rotas-da-aplicação)
