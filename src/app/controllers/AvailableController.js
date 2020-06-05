@@ -11,7 +11,6 @@ const {
 } = require('date-fns');
 
 const Appointment = require('../models/Appointment');
-const Establishment = require('../models/Establishment');
 
 class AvailableController {
   async index(req, res) {
@@ -22,17 +21,6 @@ class AvailableController {
     }
 
     const establishment_id = req.params.id;
-    const user_id = req.userId;
-
-    const userOwnEstablishment = await Establishment.findOne({
-      where: { id: establishment_id, user_id },
-    });
-
-    if (!userOwnEstablishment) {
-      return res
-        .status(400)
-        .json({ error: 'You do not have permission to this establishment.' });
-    }
 
     const searchDate = parseISO(date);
 

@@ -1,6 +1,5 @@
 const Yup = require('yup');
 const { parseISO, startOfHour, isBefore, subHours } = require('date-fns');
-const pt = require('date-fns/locale/pt');
 
 const Appointment = require('../models/Appointment');
 const User = require('../models/User');
@@ -20,11 +19,11 @@ class AppointmentController {
 
     const { page = 1 } = req.query;
     const appointments = await Appointment.findAll({
-      where: { user_id, canceled_at: null },
-      order: ['date'],
+      where: { user_id },
+      order: [['date', 'DESC']],
       limit: 15,
       offset: (page - 1) * 15,
-      attributes: ['id', 'date'],
+      attributes: ['id', 'date', 'past', 'cancelable', 'canceled_at'],
       include: [
         { model: User, as: 'user', attributes: ['id', 'name'] },
         {
